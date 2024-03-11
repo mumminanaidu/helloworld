@@ -1,0 +1,19 @@
+name: Retrieve Audit Logs
+on: workflow_dispatch
+jobs:
+  retrieve-logs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2  
+      - name: Retrieve Audit Logs
+        id: get-logs
+        run: |
+          curl -L \
+           -H "Accept: application/vnd.github+json" \
+           -H "Authorization: Bearer <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>" \
+           -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/mumminanaidu/MUMMINANAIDU/audit-log
+
+      - name: Print Audit Logs
+        run: cat audit_logs.json
