@@ -20,7 +20,7 @@ jobs:
         with:
           token: ${{ secrets.TESTING_GITHUB_TOKEN }}
           repository: ${{ github.repository }}
-          ignore-branches: "devlop"
+          ignore-branches: "dev"
           ignore-prefixes: "feature/*,fix/*,release/*"
           last-commit-age-days: ${{ steps.calculate_days.outputs.days_since_last_commit }}
           dry-run: false
