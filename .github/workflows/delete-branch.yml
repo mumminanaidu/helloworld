@@ -1,0 +1,26 @@
+name: clean up stale branches
+on: workflow_dispatch
+jobs:
+  delete-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: Calculate days since last commit
+        id: calculate_days
+        run: |
+          LAST_COMMIT_DATE=$(git log -1 --format=%cd)
+          TODAY=$(date +%s)
+          LAST_COMMIT_EPOCH=$(date -d "$LAST_COMMIT_DATE" +%s)
+          DAYS_SINCE_LAST_COMMIT=$(( ($TODAY - $LAST_COMMIT_EPOCH) / (60 * 60 * 24) ))
+          echo "::set-output name=days_since_last_commit::$DAYS_SINCE_LAST_COMMIT"
+      - name: Cleanup Stale Branches
+        if: steps.calculate_days.outputs.days_since_last_commit >= 365
+        uses: cbrgm/cleanup-stale-branches-action@v1
+        with:
+          token: ${{ secrets.TESTING_GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          ignore-branches: "staging"
+          #ignore-prefixes: "feature/*,fix/*,release/*"
+          last-commit-age-days: ${{ steps.calculate_days.outputs.days_since_last_commit }}
+          dry-run: false
