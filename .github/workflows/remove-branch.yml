@@ -13,4 +13,4 @@ jobs:
           repository: ${{ github.repository }}
           ignore-branches: "staging"
           last-commit-age-days: 365
-          dry-run: true
+          dry-run: false
