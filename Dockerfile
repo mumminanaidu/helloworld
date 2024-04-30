@@ -1,6 +1,8 @@
-# Pull base image 
-From tomcat:8-jre8 
+# Use a base image
+FROM alpine:latest
 
-# Maintainer 
-MAINTAINER "valaxytech@gmail.com" 
-COPY ./webapp.war /usr/local/tomcat/webapps
+# Set AWS access keys and secret keys as environment variables
+ENV AWS_ACCESS_KEY_ID=AKIAYUHWQCN7I3ISVZIE
+ENV AWS_SECRET_ACCESS_KEY=your_secret_access_key
+
+# Your additional Dockerfile commands here
