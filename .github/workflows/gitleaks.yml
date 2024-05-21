@@ -31,7 +31,7 @@ jobs:
           # Optional: Enable or disable PR comments (default is true)
           GITLEAKS_ENABLE_COMMENTS: "true"
           # Optional: Path to a custom Gitleaks configuration file
-          GITLEAKS_CONFIG: ".gitleaks.toml"
+          #GITLEAKS_CONFIG: ".gitleaks.toml"
           # Optional: Enable or disable uploading of a SARIF artifact (default is true)
           GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "true"
           # Optional: Enable or disable job summary (default is true)
