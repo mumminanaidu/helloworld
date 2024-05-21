@@ -1,0 +1,40 @@
+name: gitleaks
+
+on:
+  pull_request:  # Trigger on pull requests
+  push:          # Trigger on pushes
+  workflow_dispatch:  # Allow manual trigger
+  #schedule:
+   # - cron: "0 4 * * *"  # Run once a day at 4 AM
+
+jobs:
+  scan:
+    name: gitleaks
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the codebase with full history
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # Run Gitleaks scan
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Only required for Organizations, not personal accounts
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+          # Optional: List of GitHub accounts to notify when a leak is detected
+          #GITLEAKS_NOTIFY_USER_LIST: "@octocat,,@gitleaks"
+          # Optional: Enable or disable PR comments (default is true)
+          GITLEAKS_ENABLE_COMMENTS: "true"
+          # Optional: Path to a custom Gitleaks configuration file
+          GITLEAKS_CONFIG: ".gitleaks.toml"
+          # Optional: Enable or disable uploading of a SARIF artifact (default is true)
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "true"
+          # Optional: Enable or disable job summary (default is true)
+          GITLEAKS_ENABLE_SUMMARY: "true"
+          # Optional: Specify a Gitleaks version or use "latest" (default is a specific version)
+          GITLEAKS_VERSION: "latest"
